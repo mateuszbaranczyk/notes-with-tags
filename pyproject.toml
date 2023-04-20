@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "template"
+name = "fastAPI"
 version = "0.1.0"
 description = ""
 authors = ["kundziorro <example@dot.com>"]
