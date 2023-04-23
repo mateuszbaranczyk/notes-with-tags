@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "fastAPI"
 version = "0.1.0"
-description = ""
+description = "tutorial"
 authors = ["kundziorro <example@dot.com>"]
 
 [tool.poetry.dependencies]
