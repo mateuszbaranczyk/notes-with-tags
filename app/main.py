@@ -14,3 +14,4 @@ def get_vegetables(name: str):
         return {"vege_name": name}
     else:
         return {"error": f"There is no {name} in the store"}
+    
