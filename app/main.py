@@ -17,7 +17,6 @@ def root():
 
 @app.get("/vegetables/{vege_name}")
 def get_vegetables(vege_name: VegetablesModel, short: bool = False):
-    if short:
+    if short is True:
         return f"{database[vege_name]}"
     return {f"{vege_name}": database[vege_name]}
-
