@@ -26,4 +26,5 @@ def get_vegetables(vege_name: VegetablesModel, short: bool = False):
 def create_item(item: Item):
     return item
 
-#TODO https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
+
+# TODO https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
