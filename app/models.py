@@ -11,4 +11,3 @@ class Item(BaseModel):
     description: str
     price: float
     tax: float
-    

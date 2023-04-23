@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .models import VegetablesModel
+from .models import VegetablesModel, Item
 
 app = FastAPI()
 
@@ -20,3 +20,8 @@ def get_vegetables(vege_name: VegetablesModel, short: bool = False):
     if short is True:
         return f"{database[vege_name]}"
     return {f"{vege_name}": database[vege_name]}
+
+
+@app.put("/items/")
+def create_item(item: Item):
+    return item
