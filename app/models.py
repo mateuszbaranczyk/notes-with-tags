@@ -8,6 +8,6 @@ class VegetablesModel(str, Enum):
 
 class Item(BaseModel):
     name: str
-    description: str
+    description: str | None = None
     price: float
     tax: float
