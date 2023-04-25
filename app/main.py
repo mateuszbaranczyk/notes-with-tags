@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI, Query, Path
 from .models import VegetablesModel, Item
 from typing import Annotated
 
@@ -43,7 +43,7 @@ async def read_item(query_param: Annotated[str | None, Query(max_length=8)] = No
 #     query_items = {"q": query_params}
 #     return query_items
 #
-# you can create params metadata like this 
+# you can create params metadata like this
 @app.get("/read_more_items/")
 async def read_more_items(
     query_params: Annotated[
@@ -52,3 +52,17 @@ async def read_more_items(
 ):
     items = {"items": query_params}
     return items
+
+
+# validation can be used also on path parameters (example with numeric validation)
+# gt: greater than
+# ge: greater than or equal
+# lt: less than
+# le: less than or equal
+@app.get("/read_item_id/{path_param}")
+async def read_item_id(
+    path_param: Annotated[int, Path(description="The ID of the item to get", ge=0, le=1000)]
+):
+    item_id = {"requested_item_id": path_param}
+    return item_id
+
