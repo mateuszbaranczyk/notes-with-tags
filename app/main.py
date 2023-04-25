@@ -35,3 +35,12 @@ async def read_items(query_param: Annotated[str | None, Query(max_length=8)] = N
     if query_param:
         results.update({"q": query_param})
     return results
+
+
+#use Annotated[list[str] to pass more items in list like /read_more_items/?q=foo&q=bar
+@app.get("/read_more_items/")
+async def read_more_items(query_params: Annotated[list[str] | None, Query()] = None):
+    query_items = {"q": query_params}
+    return query_items
+
+
