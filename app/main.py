@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Query
 from .models import VegetablesModel, Item
+from typing import Annotated
 
 app = FastAPI()
 
@@ -16,15 +17,21 @@ def root():
 
 
 @app.get("/vegetables/{vege_name}")
-def get_vegetables(vege_name: VegetablesModel, short: bool = False):
+async def get_vegetables(vege_name: VegetablesModel, short: bool = False):
     if short is True:
         return f"{database[vege_name]}"
     return {f"{vege_name}": database[vege_name]}
 
 
-@app.put("/items/")
-def create_item(item: Item):
+@app.put("/item/")
+async def create_item(item: Item):
     return item
 
 
-# TODO https://fastapi.tiangolo.com/tutorial/query-params-str-validations/
+#query parameter with max len 50 and default value None as not required 
+@app.get("/read_items/")
+async def read_items(query_param: Annotated[str | None, Query(max_length=8)] = None):
+    results = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if query_param:
+        results.update({"q": query_param})
+    return results
