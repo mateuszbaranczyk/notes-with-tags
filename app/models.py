@@ -1,5 +1,5 @@
 from enum import Enum
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class VegetablesModel(str, Enum):
@@ -8,11 +8,18 @@ class VegetablesModel(str, Enum):
     potato = "potato"
 
 
+class Image(BaseModel):
+    url: HttpUrl
+    title: str
+
+
+# models can by nested for example Image in Item model
 class Item(BaseModel):
     name: str
     description: str | None = None
     price: float
     tax: float
+    image: Image
 
 
 # validation provided by pydantic can be used in model directly instead of endpoint parameters
