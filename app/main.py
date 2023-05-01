@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Path, Body
+from fastapi import FastAPI, Query, Path, Body, Cookie
 from .models import VegetablesModel, Item, User
 from typing import Annotated
 
@@ -74,3 +74,8 @@ async def read_item_id(
 async def item_for_user(item: Item,  user_name: User, importanace: Annotated[int, Body()]):
     result = {"item": item, "user": user_name, "importanace": importanace}
     return result
+
+
+@app.get("/item_with_ads/")
+async def item_with_ads(ads_id: Annotated[str | None, Cookie()] = None):
+    return {"ads_id": ads_id}
