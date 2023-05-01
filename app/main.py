@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query, Path, Body, Cookie
+from fastapi import FastAPI, Query, Path, Body, Cookie, status
 from .models import VegetablesModel, Item, User
 from typing import Annotated
 
@@ -23,7 +23,7 @@ async def get_vegetables(vege_name: VegetablesModel, short: bool = False):
     return {f"{vege_name}": database[vege_name]}
 
 
-@app.put("/item/")
+@app.put("/item/", status_code=status.HTTP_201_CREATED)
 async def create_item(item: Item):
     return item
 
