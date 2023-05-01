@@ -1,5 +1,5 @@
-from fastapi import FastAPI, Query, Path
-from .models import VegetablesModel, Item
+from fastapi import FastAPI, Query, Path, Body
+from .models import VegetablesModel, Item, User
 from typing import Annotated
 
 app = FastAPI()
@@ -66,3 +66,11 @@ async def read_item_id(
     item_id = {"requested_item_id": path_param}
     return item_id
 
+
+# you can put to parameters  multiple models and also use `Body to pass another key to existing body`
+# without Body it would be query parameter
+# Body also has all the same extra validation and metadata parameters as Query,Path and others you will see later.
+@app.get("/item_for_user/")
+async def item_for_user(item: Item,  user_name: User, importanace: Annotated[int, Body()]):
+    result = {"item": item, "user": user_name, "importanace": importanace}
+    return result
