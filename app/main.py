@@ -75,7 +75,7 @@ async def item_for_user(item: Item,  user_name: User, importanace: Annotated[int
     result = {"item": item, "user": user_name, "importanace": importanace}
     return result
 
-
+# Cookies and Headers are used the same way as below
 @app.get("/item_with_ads/")
 async def item_with_ads(ads_id: Annotated[str | None, Cookie()] = None):
     return {"ads_id": ads_id}
