@@ -1,6 +1,8 @@
-from fastapi import FastAPI, Query, Path, Body, Cookie, status
-from .models import VegetablesModel, Item, User
 from typing import Annotated
+
+from fastapi import Body, Cookie, FastAPI, Path, Query, status
+
+from .models import Item, User, VegetablesModel
 
 app = FastAPI()
 
