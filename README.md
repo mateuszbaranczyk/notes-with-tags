@@ -1,9 +1,8 @@
-# python_template
-Template repo for python projects
+# FastAPI training 
+from https://fastapi.tiangolo.com/
 
 ## Init
-- Set project name in `pyproject.toml`
 - Install poetry 
 - Run `poetry install`
 - Open virtual env by `poetry shell`
-- Add dependencies  by `poetry add package_name`
+- Start server by `uvicorn app.main:app` in root directory
