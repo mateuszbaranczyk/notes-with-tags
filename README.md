@@ -1,8 +1,8 @@
 # FastAPI training 
 from https://fastapi.tiangolo.com/
 
-## Init
-- Install poetry 
-- Run `poetry install`
-- Open virtual env by `poetry shell`
-- Start server by `uvicorn app.main:app` in root directory
+## Installation
+- Install docker
+- Run `docker build -t fastapi_training:latest .`
+- Start container by `docker run -p 8000:8000 fastapi_training`
+- API will be avaliable here [http://0.0.0.0:8000/docs](http://0.0.0.0:8000/docs)
