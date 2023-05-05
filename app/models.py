@@ -3,6 +3,10 @@ from enum import Enum
 from pydantic import BaseModel, Field, HttpUrl
 
 
+class Note(BaseModel):
+    text: str
+
+
 class VegetablesModel(str, Enum):
     onion = "onion"
     garlic = "garlic"
