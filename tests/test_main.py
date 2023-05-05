@@ -34,8 +34,9 @@ def test_create_note_with_img():
 
 
 def test_get_note():
-    title = "title"
+    title = "note_1"
+    result = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"]}
     response = client.get(f"/note/{title}")
     response_body = json.loads(response.content)
     assert response.status_code == 200
-    assert response_body == {"title": "title"}
+    assert response_body == result
