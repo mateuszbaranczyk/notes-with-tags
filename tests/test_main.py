@@ -13,20 +13,20 @@ def test_root():
 
 
 def test_create_note():
-    data = {"text": "test note", "tags": ["tag1", "tag2"], "image": None}
+    data = {"content": "test note", "tags": ["tag1", "tag2"], "image": None}
     response = client.put("/create_note/", json=data)
-    response_body = json.loads(response.text)
+    response_body = json.loads(response.content)
     assert response.status_code == 200
     assert response_body == data
 
 
 def test_create_note_with_img():
     data = {
-        "text": "test note",
+        "content": "test note",
         "tags": ["tag1", "tag2"],
         "image": {"title": "photo_title", "url": "https://test.pl"},
     }
     response = client.put("/create_note/", json=data)
-    response_body = json.loads(response.text)
+    response_body = json.loads(response.content)
     assert response.status_code == 200
     assert response_body == data
