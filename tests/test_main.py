@@ -35,9 +35,8 @@ def test_create_note_with_img():
 
 
 def test_get_note():
-    title = "note_1"
     result = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"], "image": None}
-    response = client.get(f"/note/{title}")
+    response = client.get(f"/note/{result['title']}")
     _assert_response(result=result, response=response, status_code=200)
 
 def test_get_tags():
