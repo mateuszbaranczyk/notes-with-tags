@@ -40,3 +40,11 @@ def test_get_note():
     response_body = json.loads(response.content)
     assert response.status_code == 200
     assert response_body == result
+
+def test_get_tags():
+    result = ["tag1", "tag2"]
+    response = client.get("/tags/")
+    response_body = json.loads(response.content)
+    assert response.status_code == 200
+    assert response_body == result
+
