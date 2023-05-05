@@ -5,6 +5,7 @@ from pydantic import BaseModel, Field, HttpUrl
 
 class Note(BaseModel):
     text: str
+    tags: list[str]
 
 
 class VegetablesModel(str, Enum):

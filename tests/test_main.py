@@ -13,7 +13,7 @@ def test_root():
 
 
 def test_create_note():
-    data = {"text": "test note"}
+    data = {"text": "test note", "tags": ["tag1", "tag2"]}
     resposne = client.put("/create_note/", json=data)
     response_body = json.loads(resposne.text)
     assert resposne.status_code == 200

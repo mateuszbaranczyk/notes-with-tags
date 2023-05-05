@@ -1,7 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Body
 
 from app import models
-
+from typing import Annotated
 app = FastAPI()
 
 
@@ -11,5 +11,5 @@ async def root():
 
 
 @app.put("/create_note/", response_model=models.Note)
-async def create_note(note: models.Note):
+async def create_note(note: Annotated[models.Note, Body(embeded=True)]):
     return note
