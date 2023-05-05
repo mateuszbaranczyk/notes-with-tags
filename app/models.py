@@ -11,4 +11,3 @@ class Note(BaseModel):
     content: str
     tags: list[str]
     image: Image | None
-

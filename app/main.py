@@ -1,10 +1,10 @@
-from fastapi import FastAPI, Body
-
-from app import models
 from typing import Annotated
 
-app = FastAPI()
+from fastapi import Body, FastAPI
 
+from app import models
+
+app = FastAPI()
 
 
 @app.get("/")
