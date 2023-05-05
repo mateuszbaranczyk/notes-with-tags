@@ -1,6 +1,4 @@
-from typing import Annotated
-
-from fastapi import Body, Cookie, FastAPI, Path, Query, status
+from fastapi import FastAPI
 
 from app import models
 
@@ -17,6 +15,7 @@ database = {
 async def root():
     return {"message": "Hello World"}
 
-@app.get("/create_note/", response_model=models.Note)
+
+@app.put("/create_note/", response_model=models.Note)
 async def create_note(note: models.Note):
     return note
