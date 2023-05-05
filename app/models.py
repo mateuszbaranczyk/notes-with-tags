@@ -1,6 +1,4 @@
-from enum import Enum
-
-from pydantic import BaseModel, Field, HttpUrl
+from pydantic import BaseModel, HttpUrl
 
 
 class Image(BaseModel):
@@ -9,6 +7,7 @@ class Image(BaseModel):
 
 
 class Note(BaseModel):
+    title: str
     content: str
     tags: list[str]
     image: Image | None
