@@ -6,7 +6,7 @@ from app import models
 
 app = FastAPI()
 
-database = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"]}
+database_result = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"]}
 
 
 @app.get("/")
@@ -19,6 +19,6 @@ async def create_note(note: Annotated[models.Note, Body(embeded=True)]):
     return note
 
 
-@app.get("/note/{title}")
+@app.get("/note/{title}", response_model=models.Note)
 async def get_note(title: str):
-    return {"title": title}
+    return database_result
