@@ -4,12 +4,6 @@ from app import models
 
 app = FastAPI()
 
-database = {
-    "potato": "22kg",
-    "garlic": "19kg",
-    "onion": "3kg",
-}
-
 
 @app.get("/")
 async def root():
