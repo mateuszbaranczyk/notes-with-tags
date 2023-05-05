@@ -2,6 +2,7 @@ from fastapi import FastAPI, Body
 
 from app import models
 from typing import Annotated
+
 app = FastAPI()
 
 

@@ -3,9 +3,15 @@ from enum import Enum
 from pydantic import BaseModel, Field, HttpUrl
 
 
+class Image(BaseModel):
+    title: str
+    url: HttpUrl
+
+
 class Note(BaseModel):
     text: str
     tags: list[str]
+    image: Image | None
 
 
 class VegetablesModel(str, Enum):
