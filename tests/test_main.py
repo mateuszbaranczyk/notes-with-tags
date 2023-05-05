@@ -34,4 +34,7 @@ def test_create_note_with_img():
 
 
 def test_get_note():
-    pass
+    title = "title"
+    response = client.get(f"/note/{title}")
+    assert response.status_code == 200
+    assert response.content == {"title": "title"}
