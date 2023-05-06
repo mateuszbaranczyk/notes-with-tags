@@ -1,4 +1,5 @@
 import json
+from unittest.mock import ANY
 
 from fastapi.testclient import TestClient
 from requests import Response
@@ -14,8 +15,14 @@ def test_root():
 
 
 def test_create_note():
-    data = {"title": "title", "content": "test note", "tags": ["tag1", "tag2"], "image": None}
+    data = {
+        "title": "title",
+        "content": "test note",
+        "tags": ["tag1", "tag2"],
+        "image": None,
+    }
     response = client.put("/create_note/", json=data)
+    data["uuid"] = ANY
     _assert_response(result=data, response=response, status_code=200)
 
 
@@ -33,11 +40,14 @@ def test_create_note_with_img():
         "image": {"title": "photo_title", "url": "https://test.pl"},
     }
     response = client.put("/create_note/", json=data)
+    data["uuid"] = ANY
+    data["image"]["uuid"] = ANY
     _assert_response(result=data, response=response, status_code=200)
 
 
 def test_get_note():
     result = {
+        "uuid": ANY,
         "title": "note_1",
         "content": "note_content",
         "tags": ["test_1", "test_2"],
