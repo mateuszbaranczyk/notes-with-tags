@@ -1,17 +1,9 @@
-import string
 from typing import List
 
-import shortuuid
 from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
 
 from app.database import db_config
-
-
-def create_uuid(prefix: str) -> str:
-    alphabet = string.ascii_lowercase + string.digits
-    suuid = shortuuid.ShortUUID(alphabet=alphabet)
-    return f"{prefix}-{suuid.random(length=4)}-{suuid.random(length=4)}"
 
 
 class UUID:
