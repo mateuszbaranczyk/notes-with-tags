@@ -4,6 +4,8 @@ from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
 
 from app.database import db_config
+import string
+import shortuuid
 
 import string
 import shortuuid
