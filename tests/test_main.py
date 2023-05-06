@@ -1,5 +1,6 @@
 import json
 from unittest.mock import ANY
+from unittest import TestCase
 
 from fastapi.testclient import TestClient
 from requests import Response
@@ -16,6 +17,7 @@ def test_root():
 
 def test_create_note():
     data = {
+        "uuid": None,
         "title": "title",
         "content": "test note",
         "tags": ["tag1", "tag2"],
@@ -34,6 +36,7 @@ def _assert_response(result: dict, response: Response, status_code: int):
 
 def test_create_note_with_img():
     data = {
+        "uuid": None,
         "title": "title",
         "content": "test note",
         "tags": ["tag1", "tag2"],
@@ -60,4 +63,6 @@ def test_get_note():
 def test_get_tags():
     result = ["tag1", "tag2"]
     response = client.get("/tags/")
-    _assert_response(result=result, response=response, status_code=200)
+    response_body = json.loads(response.content)
+    test_case = TestCase()
+    test_case.assertListEqual(result, response_body)

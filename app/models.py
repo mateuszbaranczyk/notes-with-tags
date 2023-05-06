@@ -11,13 +11,13 @@ def create_uuid(prefix: str) -> str:
 
 
 class Image(BaseModel):
-    uuid: str = create_uuid(prefix="ig")
+    uuid: str | None
     title: str
     url: HttpUrl
 
 
 class Note(BaseModel):
-    uuid: str = create_uuid(prefix="no")
+    uuid: str | None
     title: str
     content: str
     tags: list[str]
