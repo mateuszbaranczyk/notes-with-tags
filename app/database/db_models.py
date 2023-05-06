@@ -1,16 +1,12 @@
+import string
 from typing import List
 
+import shortuuid
 from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
 
 from app.database import db_config
-import string
-import shortuuid
-import string
-import shortuuid
 
-import string
-import shortuuid
 
 class UUID:
     def __init__(self) -> None:
@@ -33,7 +29,6 @@ class Note(db_config.Base):
     content = Column(Text)
     tags = Column(List)
     image = relationship("Image", back_populates="owner")
-
 
 
 def create_uuid(prefix: str) -> str:
