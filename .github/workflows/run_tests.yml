@@ -41,7 +41,7 @@ jobs:
       - name: Lint by flake8
         run: |
           source .venv/bin/activate
-          flake8 --ignore=E501 --max-line-length 100 ./fast_api_tutorial/
+          flake8 --ignore=E501 --max-line-length 100 ./app/ ./test/
       - name: Check imports
         run: |
           source .venv/bin/activate
