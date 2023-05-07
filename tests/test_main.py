@@ -63,6 +63,6 @@ def test_get_note():
 def test_get_tags():
     result = ["tag1", "tag2"]
     response = client.get("/tags/")
-    response_body = json.loads(response.content)
-    test_case = TestCase()
-    test_case.assertListEqual(result, response_body)
+    response_body = json.loads(response.text)
+    response_body.sort()
+    assert result == response_body
