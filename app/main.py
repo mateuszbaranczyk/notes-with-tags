@@ -2,7 +2,7 @@ from typing import Annotated
 
 from fastapi import Body, FastAPI
 
-from app import models
+from app import api_models
 
 app = FastAPI()
 
@@ -15,12 +15,12 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.put("/create_note/", response_model=models.NoteOut)
-async def create_note(note: Annotated[models.Note, Body(embeded=True)]):
+@app.put("/create_note/", response_model=api_models.NoteOut)
+async def create_note(note: Annotated[api_models.Note, Body(embeded=True)]):
     return note
 
 
-@app.get("/note/{title}", response_model=models.NoteOut)
+@app.get("/note/{title}", response_model=api_models.NoteOut)
 async def get_note(title: str):
     return database_result
 

@@ -1,4 +1,4 @@
-from app.models import create_uuid
+from app.api_models import create_uuid
 
 
 def test_create_uuid():
