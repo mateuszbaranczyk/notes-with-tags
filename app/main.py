@@ -15,12 +15,12 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.put("/create_note/", response_model=models.Note)
+@app.put("/create_note/", response_model=models.NoteOut)
 async def create_note(note: Annotated[models.Note, Body(embeded=True)]):
     return note
 
 
-@app.get("/note/{title}", response_model=models.Note)
+@app.get("/note/{title}", response_model=models.NoteOut)
 async def get_note(title: str):
     return database_result
 

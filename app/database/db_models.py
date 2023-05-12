@@ -8,11 +8,6 @@ from sqlalchemy.orm import relationship
 from app.database import db_config
 
 
-class UUID:
-    def __init__(self) -> None:
-        pass
-
-
 class Image(db_config.Base):
     __tablename__ = "images"
 

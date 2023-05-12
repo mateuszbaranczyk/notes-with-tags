@@ -11,14 +11,20 @@ def create_uuid(prefix: str) -> str:
 
 
 class Image(BaseModel):
-    uuid: str | None
     title: str
     url: HttpUrl
 
 
-class Note(BaseModel):
+class ImageOut(Image):
     uuid: str | None
+
+
+class Note(BaseModel):
     title: str
     content: str
     tags: list[str]
-    image: Image | None
+    image: ImageOut | None
+
+
+class NoteOut(Note):
+    uuid: str | None
