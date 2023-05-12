@@ -7,6 +7,8 @@ from app.main import app
 
 client = TestClient(app)
 
+# TODO replace response models by models from db_models
+
 
 def test_root():
     response = client.get("/")

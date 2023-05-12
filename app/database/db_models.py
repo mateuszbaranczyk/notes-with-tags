@@ -25,6 +25,9 @@ class ImageWrite(ImageBase):
 class ImageRead(ImageBase):
     uuid: UUID
 
+    class Config:
+        orm_mode = True
+
 
 class NoteBase(BaseModel):
     title: str
@@ -39,3 +42,6 @@ class NoteWrite(NoteBase):
 
 class NoteRead(NoteBase):
     uuid: UUID
+
+    class Config:
+        orm_mode = True
