@@ -3,17 +3,11 @@ import json
 from fastapi.testclient import TestClient
 from requests import Response
 
-from app.database.db_config import prepare_database
 from app.main import app
 
 client = TestClient(app)
 
 # TODO replace response models by models from db_models
-
-
-@app.on_event("startup")
-async def startup_event():
-    prepare_database()
 
 
 def test_root():

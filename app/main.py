@@ -3,12 +3,18 @@ from typing import Annotated
 from fastapi import Body, FastAPI
 
 from app import api_models
+from app.database.db_config import prepare_database
 
 app = FastAPI()
 
 
 database_result = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"]}
 tags_from_db = ["tag1", "tag2", "tag2"]
+
+
+@app.on_event("startup")
+async def startup_event():
+    prepare_database()
 
 
 @app.get("/")
