@@ -1,7 +1,5 @@
-import string
 from typing import List
 
-import shortuuid
 from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
 
@@ -24,9 +22,3 @@ class Note(db_config.Base):
     content = Column(Text)
     tags = Column(List)
     image = relationship("Image", back_populates="owner")
-
-
-def create_uuid(prefix: str) -> str:
-    alphabet = string.ascii_lowercase + string.digits
-    suuid = shortuuid.ShortUUID(alphabet=alphabet)
-    return f"{prefix}-{suuid.random(length=4)}-{suuid.random(length=4)}"
