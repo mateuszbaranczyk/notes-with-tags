@@ -6,6 +6,7 @@ from app import api_models
 
 app = FastAPI()
 
+
 database_result = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"]}
 tags_from_db = ["tag1", "tag2", "tag2"]
 

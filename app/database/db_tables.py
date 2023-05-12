@@ -1,5 +1,3 @@
-from typing import List
-
 from sqlalchemy import Column, String, Text
 from sqlalchemy.orm import relationship
 
@@ -20,5 +18,5 @@ class Note(db_config.Base):
     uuid = Column(String, primary_key=True, index=True)
     title = Column(String, index=True)
     content = Column(Text)
-    tags = Column(List)
+    tags = Column(String)
     image = relationship("Image", back_populates="owner")
