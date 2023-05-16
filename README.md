@@ -9,4 +9,3 @@ from https://fastapi.tiangolo.com/
 
 
 
-![](https://komarev.com/ghpvc/?username=mateuszbaranczyk)
