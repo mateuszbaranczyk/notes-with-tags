@@ -131,3 +131,4 @@ dmypy.json
 
 # Database file 
 sql_app.db
+test.db
