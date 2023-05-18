@@ -22,7 +22,7 @@ class ImageWrite(ImageBase):
     uuid: UUID = create_uuid(prefix="ig")
 
 
-class ImageRead(ImageBase):
+class Image(ImageBase):
     uuid: UUID
 
     class Config:
@@ -33,14 +33,14 @@ class NoteBase(BaseModel):
     title: str
     content: str
     tags: list[str]
-    image: ImageRead | None
+    image: Image | None
 
 
 class NoteWrite(NoteBase):
     uuid: UUID = create_uuid(prefix="no")
 
 
-class NoteRead(NoteBase):
+class Note(NoteBase):
     uuid: UUID
 
     class Config:
