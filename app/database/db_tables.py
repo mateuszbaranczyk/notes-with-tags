@@ -11,6 +11,8 @@ class Image(db_config.Base):
     title = Column(String, index=True)
     url = Column(String)
 
+    owner = relationship("Note", back_populates="images")
+
 
 class Note(db_config.Base):
     __tablename__ = "notes"
