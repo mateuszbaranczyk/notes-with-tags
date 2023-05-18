@@ -1,21 +1,21 @@
 from pydantic import BaseModel, HttpUrl
 
 
-class Image(BaseModel):
+class ImageIn(BaseModel):
     title: str
     url: HttpUrl
 
 
-class ImageOut(Image):
+class Image(ImageIn):
     uuid: str | None
 
 
-class Note(BaseModel):
+class NoteIn(BaseModel):
     title: str
     content: str
     tags: list[str]
-    image: ImageOut | None
+    image: Image | None
 
 
-class NoteOut(Note):
+class Note(NoteIn):
     uuid: str | None

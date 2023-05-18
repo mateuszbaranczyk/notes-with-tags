@@ -1,4 +1,4 @@
-from app.database.db_models import create_uuid
+from app.database.crud import create_uuid
 
 
 def test_create_uuid():

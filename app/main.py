@@ -22,12 +22,12 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.put("/create_note/", response_model=api_models.NoteOut)
-async def create_note(note: Annotated[api_models.Note, Body(embeded=True)]):
+@app.put("/create_note/", response_model=api_models.Note)
+async def create_note(note: Annotated[api_models.NoteIn, Body(embeded=True)]):
     return note
 
 
-@app.get("/note/{title}", response_model=api_models.NoteOut)
+@app.get("/note/{title}", response_model=api_models.Note)
 async def get_note(title: str):
     return database_result
 

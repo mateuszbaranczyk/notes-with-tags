@@ -1,5 +1,4 @@
-from sqlalchemy import Column, String, Text
-from sqlalchemy.orm import relationship
+from sqlalchemy import Column, ForeignKey, String, Text
 
 from app.database import db_config
 
@@ -11,8 +10,6 @@ class Image(db_config.Base):
     title = Column(String, index=True)
     url = Column(String)
 
-    owner = relationship("Note", back_populates="images")
-
 
 class Note(db_config.Base):
     __tablename__ = "notes"
@@ -21,4 +18,4 @@ class Note(db_config.Base):
     title = Column(String, index=True)
     content = Column(Text)
     tags = Column(String)
-    image = relationship("Image", back_populates="owner")
+    image = Column(String, ForeignKey("images.uuid"))
