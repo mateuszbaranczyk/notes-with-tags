@@ -18,7 +18,7 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
     db.add(db_note)
     db.commit()
     db.refresh(db_note)
-    return note
+    return db_note
 
 
 def create_image():

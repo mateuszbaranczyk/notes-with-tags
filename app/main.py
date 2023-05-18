@@ -1,9 +1,10 @@
 from typing import Annotated
 
-from fastapi import Body, FastAPI
+from fastapi import Body, Depends, FastAPI
 
 from app import api_models
-from app.database.db_config import prepare_database
+from app.database import crud
+from app.database.db_config import get_db, prepare_database
 
 app = FastAPI()
 
@@ -22,9 +23,11 @@ async def root():
     return {"message": "Hello World"}
 
 
+# TODO move uuid creation from crud
 @app.put("/create_note/", response_model=api_models.Note)
-async def create_note(note: Annotated[api_models.NoteIn, Body(embeded=True)]):
-    return note
+async def create_note(note: Annotated[api_models.NoteIn, Body(embeded=True)], db=Depends(get_db)):
+    crud.create_note(db, note)
+    return {"msg": "created"}
 
 
 @app.get("/note/{title}", response_model=api_models.Note)

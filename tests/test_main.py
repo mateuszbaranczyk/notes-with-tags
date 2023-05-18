@@ -4,7 +4,6 @@ from fastapi.testclient import TestClient
 from requests import Response
 
 from app.main import app
-from unittest.mock import ANY
 
 client = TestClient(app)
 
@@ -24,9 +23,9 @@ def test_create_note():
         "image": None,
     }
     response = client.put("/create_note/", json=data)
-    data["uuid"] = ANY
     assert response.status_code == 200
-    assert response.content["title"] == data["title"]
+    assert response.json()["msg"] == "created"
+
 
 def _assert_response(expected_result: dict, response: Response, status_code: int):
     response_body = json.loads(response.content)
