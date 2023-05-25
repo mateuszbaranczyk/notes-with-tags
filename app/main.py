@@ -1,6 +1,4 @@
-from typing import Annotated
-
-from fastapi import Body, Depends, FastAPI
+from fastapi import Depends, FastAPI
 
 from app import api_models
 from app.database import crud
@@ -9,7 +7,12 @@ from app.database.db_config import get_db, prepare_database
 app = FastAPI()
 
 
-database_result = {"title": "note_1", "content": "note_content", "tags": "test_1", "uuid": "no-test-test"}
+database_result = {
+    "title": "note_1",
+    "content": "note_content",
+    "tags": "test_1",
+    "uuid": "no-test-test",
+}
 tags_from_db = ["tag1", "tag2", "tag2"]
 
 
