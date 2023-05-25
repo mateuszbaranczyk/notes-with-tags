@@ -43,12 +43,11 @@ def test_create_note():
     data = {
         "title": "title",
         "content": "test note",
-        "tags": ["tag1", "tag2"],
-        "image": None,
+        "tags": "tag",
     }
     response = client.put("/create_note/", json=data)
     assert response.status_code == 200
-    assert response.json()["msg"] == "created"
+    assert response.json()["msg"] == "Created note!"
 
 
 def _assert_response(expected_result: dict, response: Response, status_code: int):

@@ -13,8 +13,8 @@ class Image(ImageIn):
 class NoteIn(BaseModel):
     title: str
     content: str
-    tags: list[str]
-    image: Image | None
+    tags: str
+    # image: Image | None
 
 
 class Note(NoteIn):

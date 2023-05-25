@@ -24,10 +24,10 @@ async def root():
 
 
 # TODO move uuid creation from crud
-@app.put("/create_note/", response_model=api_models.Note)
-async def create_note(note: Annotated[api_models.NoteIn, Body(embeded=True)], db=Depends(get_db)):
+@app.put("/create_note/")
+async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
     crud.create_note(db, note)
-    return {"msg": "created"}
+    return {"msg": "Created note!"}
 
 
 @app.get("/note/{title}", response_model=api_models.Note)

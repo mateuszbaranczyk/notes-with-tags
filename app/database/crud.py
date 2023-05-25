@@ -12,7 +12,7 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
         title=note.title,
         content=note.content,
         tags=note.tags,
-        image=note.image,
+        # image=note.image,
         uuid=create_uuid(prefix="no"),
     )
     db.add(db_note)
