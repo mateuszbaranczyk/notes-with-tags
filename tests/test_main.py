@@ -85,3 +85,10 @@ def test_get_tags():
     response_body = json.loads(response.text)
     response_body.sort()
     assert result == response_body
+
+
+def test_add_image():
+    data = {"title": "image", "url": "https://test.pl"}
+    result = {"msg": "Image added!"}
+    response = client.put("/add_image", json=data)
+    _assert_response(expected_result=result, status_code=200, response=response)

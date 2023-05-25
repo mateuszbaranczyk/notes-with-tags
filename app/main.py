@@ -37,6 +37,11 @@ async def get_note(title: str):
     return database_result
 
 
+@app.put("/add_image")
+async def add_image(image: api_models.ImageIn, db=Depends(get_db)):
+    return {"msg": "Image added!"}
+
+
 @app.get("/tags/")
 async def get_tags() -> set[str]:
     tags = set(tags_from_db)
