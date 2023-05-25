@@ -21,8 +21,16 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
     return db_note
 
 
-def create_image():
-    pass
+def create_image(db: Session, image: api_models.ImageIn) -> api_models.Image:
+    db_image = db_tables.Image(
+        title=image.title,
+        url=image.url,
+        uuid=create_uuid(prefix="ig"),
+    )
+    db.add(db_image)
+    db.commit()
+    db.refresh(db_image)
+    return db_image
 
 
 def read_note():
