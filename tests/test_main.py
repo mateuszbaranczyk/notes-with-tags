@@ -1,4 +1,5 @@
 import json
+from unittest.mock import ANY
 
 from fastapi.testclient import TestClient
 from requests import Response
@@ -89,7 +90,7 @@ def test_get_tags():
 
 def test_add_image():
     data = {"title": "image", "url": "https://test.pl"}
-    result = {"msg": "Image added!"}
+    result = {"msg": "Image added!", "uuid": ANY}
     response = client.put("/add_image", json=data)
     _assert_response(expected_result=result, status_code=200, response=response)
 
