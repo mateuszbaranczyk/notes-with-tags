@@ -73,11 +73,10 @@ def test_get_note():
     result = {
         "title": "note_1",
         "content": "note_content",
-        "tags": ["test_1", "test_2"],
-        "image": None,
+        "tags": "test_1",
+        "uuid": "no-test-test"
     }
     response = client.get(f"/note/{result['title']}")
-    result["uuid"] = None
     _assert_response(expected_result=result, response=response, status_code=200)
 
 

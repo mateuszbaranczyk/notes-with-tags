@@ -9,7 +9,7 @@ from app.database.db_config import get_db, prepare_database
 app = FastAPI()
 
 
-database_result = {"title": "note_1", "content": "note_content", "tags": ["test_1", "test_2"]}
+database_result = {"title": "note_1", "content": "note_content", "tags": "test_1", "uuid": "no-test-test"}
 tags_from_db = ["tag1", "tag2", "tag2"]
 
 
@@ -23,7 +23,6 @@ async def root():
     return {"message": "Hello World"}
 
 
-# TODO move uuid creation from crud
 @app.put("/create_note/")
 async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
     crud.create_note(db, note)
