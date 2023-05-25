@@ -39,6 +39,7 @@ async def get_note(title: str):
 
 @app.put("/add_image")
 async def add_image(image: api_models.ImageIn, db=Depends(get_db)):
+    crud.add_image(db, image)
     return {"msg": "Image added!"}
 
 

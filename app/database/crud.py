@@ -21,7 +21,7 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
     return db_note
 
 
-def create_image(db: Session, image: api_models.ImageIn) -> api_models.Image:
+def add_image(db: Session, image: api_models.ImageIn) -> api_models.Image:
     db_image = db_tables.Image(
         title=image.title,
         url=image.url,
