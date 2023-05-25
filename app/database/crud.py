@@ -4,6 +4,7 @@ import shortuuid
 from sqlalchemy.orm import Session
 
 from app import api_models
+from app.api_models import UUID
 from app.database import db_tables
 
 
@@ -21,6 +22,10 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
     return db_note
 
 
+def get_note():
+    pass
+
+
 def add_image(db: Session, image: api_models.ImageIn) -> api_models.Image:
     db_image = db_tables.Image(
         title=image.title,
@@ -33,15 +38,11 @@ def add_image(db: Session, image: api_models.ImageIn) -> api_models.Image:
     return db_image
 
 
-def read_note():
-    pass
+def get_image(db: Session, uuid: UUID) -> api_models.Image:
+    return db.query(db_tables.Image).filter(db_tables.Image.uuid == uuid).first()
 
 
-def read_image():
-    pass
-
-
-def create_uuid(prefix: str) -> str:
+def create_uuid(prefix: str) -> UUID:
     alphabet = string.ascii_lowercase + string.digits
     suuid = shortuuid.ShortUUID(alphabet=alphabet)
     return f"{prefix}-{suuid.random(length=4)}-{suuid.random(length=4)}"

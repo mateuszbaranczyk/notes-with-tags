@@ -1,5 +1,8 @@
+from typing import NewType
+
 from pydantic import BaseModel, HttpUrl
 
+UUID = NewType("UUID", str)
 
 class ImageIn(BaseModel):
     title: str
@@ -7,7 +10,7 @@ class ImageIn(BaseModel):
 
 
 class Image(ImageIn):
-    uuid: str | None
+    uuid: UUID
 
 
 class NoteIn(BaseModel):
@@ -18,4 +21,4 @@ class NoteIn(BaseModel):
 
 
 class Note(NoteIn):
-    uuid: str | None
+    uuid: UUID
