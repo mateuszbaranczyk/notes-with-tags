@@ -92,3 +92,11 @@ def test_add_image():
     result = {"msg": "Image added!"}
     response = client.put("/add_image", json=data)
     _assert_response(expected_result=result, status_code=200, response=response)
+
+
+def test_get_image():
+    data = {"title": "image", "url": "https://test.pl"}
+    image = client.put("/add_image", json=data)
+    image_uuid = json.loads(image.content)["uuid"]
+    response = client.get(f"/get_image/{image_uuid}")
+    assert response.status_code == 200
