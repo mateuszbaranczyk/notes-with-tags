@@ -30,6 +30,10 @@ async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
 @app.get("/note/{title}", response_model=api_models.Note)
 async def get_note(title: str, db=Depends(get_db)):
     note = crud.get_note(db, title)
+    if note.image:
+        # TODO replace by relationshio
+        image = crud.get_image(db, note.image)
+        note.image = image
     return note
 
 
