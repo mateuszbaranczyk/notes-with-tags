@@ -7,7 +7,7 @@ class Image(db_config.Base):
     __tablename__ = "images"
 
     uuid = Column(String, primary_key=True, index=True, unique=True)
-    title = Column(String, index=True, unique=True)
+    title = Column(String, index=True)
     url = Column(String)
 
 

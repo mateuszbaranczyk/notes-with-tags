@@ -1,4 +1,5 @@
 import json
+import random
 from unittest.mock import ANY
 
 from fastapi.testclient import TestClient
@@ -32,8 +33,6 @@ app.dependency_overrides[get_db] = override_get_db
 
 client = TestClient(app)
 
-# TODO replace response models by models from db_models
-
 
 def test_root():
     response = client.get("/")
@@ -41,7 +40,7 @@ def test_root():
 
 
 def test_create_note():
-    data = {"title": "title", "content": "test note", "tags": "tag", "image": None}
+    data = {"title": fake_title(), "content": "test note", "tags": "tag", "image": None}
     response = client.put("/create_note/", json=data)
     result = {"msg": "Created note!", "uuid": ANY}
     assert_response(expected_result=result, response=response, status_code=200)
@@ -56,7 +55,7 @@ def assert_response(expected_result: dict, response: Response, status_code: int)
 def test_create_note_with_img():
     # TODO does not checking if note has image!!!
     data = {
-        "title": "title",
+        "title": fake_title(),
         "content": "test note",
         "tags": "tag1",
         "image": "ig-test-test",
@@ -70,7 +69,7 @@ def create_note(with_image: bool = False) -> tuple[str, str] | str:
     image_data, image_uuid = create_image()
     image_data["uuid"] = image_uuid
     note_data = {
-        "title": "note_1",
+        "title": fake_title(),
         "content": "note_content",
         "tags": "test_1",
         "image": image_uuid if with_image else None,
@@ -86,7 +85,7 @@ def create_note(with_image: bool = False) -> tuple[str, str] | str:
 def test_get_note():
     note_title = create_note()
     result = {
-        "title": "note_1",
+        "title": note_title,
         "content": "note_content",
         "tags": "test_1",
         "uuid": ANY,
@@ -99,7 +98,7 @@ def test_get_note():
 def test_get_note_with_img():
     note_title, image_data = create_note(with_image=True)
     result = {
-        "title": "note_1",
+        "title": note_title,
         "content": "note_content",
         "tags": "test_1",
         "uuid": ANY,
@@ -136,3 +135,6 @@ def create_image() -> dict | UUID:
     image = client.put("/add_image", json=data)
     image_uuid = json.loads(image.content)["uuid"]
     return data, image_uuid
+
+def fake_title():
+    return ''.join((random.choice('abcdxyzpqr') for _ in range(5)))
