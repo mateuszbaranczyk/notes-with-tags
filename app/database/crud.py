@@ -20,8 +20,8 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
     return db_note
 
 
-def get_note():
-    pass
+def get_note(db, title):
+    return db.query(db_tables.Note).filter(db_tables.Note.title == title).first()
 
 
 def add_image(db: Session, image: api_models.ImageIn) -> api_models.Image:

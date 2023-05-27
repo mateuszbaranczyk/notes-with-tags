@@ -8,12 +8,6 @@ from app.database.db_config import get_db, prepare_database
 app = FastAPI()
 
 
-database_result = {
-    "title": "note_1",
-    "content": "note_content",
-    "tags": "test_1",
-    "uuid": "no-test-test",
-}
 tags_from_db = ["tag1", "tag2", "tag2"]
 
 
@@ -34,8 +28,9 @@ async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
 
 
 @app.get("/note/{title}", response_model=api_models.Note)
-async def get_note(title: str):
-    return database_result
+async def get_note(title: str, db=Depends(get_db)):
+    note = crud.get_note(db, title)
+    return note
 
 
 @app.put("/add_image/")
