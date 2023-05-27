@@ -100,4 +100,5 @@ def test_get_image():
     image = client.put("/add_image", json=data)
     image_uuid = json.loads(image.content)["uuid"]
     response = client.get(f"/get_image/{image_uuid}")
-    assert response.status_code == 200
+    data["uuid"] = image_uuid
+    _assert_response(expected_result=data, response=response, status_code=200)

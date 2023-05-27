@@ -4,6 +4,7 @@ from pydantic import BaseModel, HttpUrl
 
 UUID = NewType("UUID", str)
 
+
 class ImageIn(BaseModel):
     title: str
     url: HttpUrl
@@ -11,6 +12,9 @@ class ImageIn(BaseModel):
 
 class Image(ImageIn):
     uuid: UUID
+
+    class Config:
+        orm_mode = True
 
 
 class NoteIn(BaseModel):
@@ -22,3 +26,6 @@ class NoteIn(BaseModel):
 
 class Note(NoteIn):
     uuid: UUID
+
+    class Config:
+        orm_mode = True
