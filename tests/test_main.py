@@ -52,17 +52,17 @@ def assert_response(expected_result: dict, response: Response, status_code: int)
     assert response_body == expected_result
 
 
-# def test_create_note_with_img():
-#     data = {
-#         "title": "title",
-#         "content": "test note",
-#         "tags": "tag1",
-#         "image": {"title": "photo_title", "url": "https://test.pl"},
-#     }
-#     response = client.put("/create_note/", json=data)
-#     data["uuid"] = None
-#     data["image"]["uuid"] = None
-#     _assert_response(expected_result=data, response=response, status_code=200)
+def test_create_note_with_img():
+    data = {
+        "title": "title",
+        "content": "test note",
+        "tags": "tag1",
+        "image": {"title": "photo_title", "url": "https://test.pl"},
+    }
+    response = client.put("/create_note/", json=data)
+    data["uuid"] = None
+    data["image"]["uuid"] = None
+    assert_response(expected_result=data, response=response, status_code=200)
 
 
 def test_get_note():
