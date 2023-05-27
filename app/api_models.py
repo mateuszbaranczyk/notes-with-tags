@@ -21,7 +21,7 @@ class NoteIn(BaseModel):
     title: str
     content: str
     tags: str
-    # image: Image | None
+    image: Image | None
 
 
 class Note(NoteIn):

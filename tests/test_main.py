@@ -40,11 +40,7 @@ def test_root():
 
 
 def test_create_note():
-    data = {
-        "title": "title",
-        "content": "test note",
-        "tags": "tag",
-    }
+    data = {"title": "title", "content": "test note", "tags": "tag", "image": None}
     response = client.put("/create_note/", json=data)
     assert response.status_code == 200
     assert response.json()["msg"] == "Created note!"
@@ -75,6 +71,7 @@ def test_get_note():
         "content": "note_content",
         "tags": "test_1",
         "uuid": "no-test-test",
+        "image": None,
     }
     response = client.get(f"/note/{result['title']}")
     assert_response(expected_result=result, response=response, status_code=200)
