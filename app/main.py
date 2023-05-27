@@ -29,8 +29,8 @@ async def root():
 
 @app.put("/create_note/")
 async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
-    crud.create_note(db, note)
-    return {"msg": "Created note!"}
+    created_object = crud.create_note(db, note)
+    return {"msg": "Created note!", "uuid": created_object.uuid}
 
 
 @app.get("/note/{title}", response_model=api_models.Note)

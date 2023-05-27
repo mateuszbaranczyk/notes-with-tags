@@ -18,4 +18,4 @@ class Note(db_config.Base):
     title = Column(String, index=True)
     content = Column(Text)
     tags = Column(String)
-    # image = Column(String, ForeignKey("images.uuid"))
+    image = Column(String)
