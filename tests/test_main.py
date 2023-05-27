@@ -5,6 +5,7 @@ from fastapi.testclient import TestClient
 from requests import Response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from app.api_models import UUID
 
 from app.database.db_config import Base, get_db
 from app.main import app
@@ -76,6 +77,19 @@ def test_get_note():
     assert_response(expected_result=result, response=response, status_code=200)
 
 
+def test_get_note_with_img():
+    image_data, image_uuid = create_image()
+    image_data["uuid"] = image_uuid
+    result = {
+        "title": "note_1",
+        "content": "note_content",
+        "tags": "test_1",
+        "uuid": "no-test-test",
+        "image": image_data,
+    }
+    response = client.get(f"/note/{result['title']}")
+    assert_response(expected_result=result, response=response, status_code=200)
+
 def test_get_tags():
     result = ["tag1", "tag2"]
     response = client.get("/tags/")
@@ -98,7 +112,7 @@ def test_get_image():
     assert_response(expected_result=image_data, response=response, status_code=200)
 
 
-def create_image():
+def create_image()-> dict | UUID:
     data = {"title": "image", "url": "https://test.pl"}
     image = client.put("/add_image", json=data)
     image_uuid = json.loads(image.content)["uuid"]

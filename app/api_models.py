@@ -26,6 +26,7 @@ class NoteIn(BaseModel):
 
 class Note(NoteIn):
     uuid: UUID
+    image: Image | None
 
     class Config:
         orm_mode = True
