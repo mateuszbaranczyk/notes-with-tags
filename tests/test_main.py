@@ -5,8 +5,8 @@ from fastapi.testclient import TestClient
 from requests import Response
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from app.api_models import UUID
 
+from app.api_models import UUID
 from app.database.db_config import Base, get_db
 from app.main import app
 
@@ -65,15 +65,32 @@ def test_create_note_with_img():
     assert_response(expected_result=result, response=response, status_code=200)
 
 
+def create_note(with_image: bool = False) -> tuple[str, str] | str:
+    image_data, image_uuid = create_image()
+    note_data = {
+        "title": "note_1",
+        "content": "note_content",
+        "tags": "test_1",
+        "image": image_uuid if with_image else None,
+    }
+    client.put("/create_note/", json=note_data)
+
+    if with_image:
+        note_data["title"], image_data
+    else:
+        return note_data["title"]
+
+
 def test_get_note():
+    note_title = create_note()
     result = {
         "title": "note_1",
         "content": "note_content",
         "tags": "test_1",
-        "uuid": "no-test-test",
+        "uuid": ANY,
         "image": None,
     }
-    response = client.get(f"/note/{result['title']}")
+    response = client.get(f"/note/{note_title}")
     assert_response(expected_result=result, response=response, status_code=200)
 
 
@@ -89,6 +106,7 @@ def test_get_note_with_img():
     }
     response = client.get(f"/note/{result['title']}")
     assert_response(expected_result=result, response=response, status_code=200)
+
 
 def test_get_tags():
     result = ["tag1", "tag2"]
@@ -112,7 +130,7 @@ def test_get_image():
     assert_response(expected_result=image_data, response=response, status_code=200)
 
 
-def create_image()-> dict | UUID:
+def create_image() -> dict | UUID:
     data = {"title": "image", "url": "https://test.pl"}
     image = client.put("/add_image", json=data)
     image_uuid = json.loads(image.content)["uuid"]
