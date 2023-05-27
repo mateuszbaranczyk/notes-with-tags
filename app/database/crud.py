@@ -14,11 +14,9 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
         content=note.content,
         tags=note.tags,
         # image=note.image,
-        uuid=create_uuid(prefix="no"),
+        uuid=_create_uuid(prefix="no"),
     )
-    db.add(db_note)
-    db.commit()
-    db.refresh(db_note)
+    _save_in_db(db, db_note)
     return db_note
 
 
@@ -30,11 +28,9 @@ def add_image(db: Session, image: api_models.ImageIn) -> api_models.Image:
     db_image = db_tables.Image(
         title=image.title,
         url=image.url,
-        uuid=create_uuid(prefix="ig"),
+        uuid=_create_uuid(prefix="ig"),
     )
-    db.add(db_image)
-    db.commit()
-    db.refresh(db_image)
+    _save_in_db(db, db_image)
     return db_image
 
 
@@ -42,7 +38,14 @@ def get_image(db: Session, uuid: UUID) -> api_models.Image:
     return db.query(db_tables.Image).filter(db_tables.Image.uuid == uuid).first()
 
 
-def create_uuid(prefix: str) -> UUID:
+def _create_uuid(prefix: str) -> UUID:
     alphabet = string.ascii_lowercase + string.digits
     suuid = shortuuid.ShortUUID(alphabet=alphabet)
     return f"{prefix}-{suuid.random(length=4)}-{suuid.random(length=4)}"
+
+
+def _save_in_db(db: Session, db_object: api_models.NoteIn | api_models.ImageIn) -> None:
+    db.add(db_object)
+    db.commit()
+    db.refresh(db_object)
+    return None
