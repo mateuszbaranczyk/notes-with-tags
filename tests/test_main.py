@@ -54,6 +54,7 @@ def assert_response(expected_result: dict, response: Response, status_code: int)
 
 
 def test_create_note_with_img():
+    # TODO does not checking if note has image!!!
     data = {
         "title": "title",
         "content": "test note",
@@ -67,6 +68,7 @@ def test_create_note_with_img():
 
 def create_note(with_image: bool = False) -> tuple[str, str] | str:
     image_data, image_uuid = create_image()
+    image_data["uuid"] = image_uuid
     note_data = {
         "title": "note_1",
         "content": "note_content",
@@ -76,7 +78,7 @@ def create_note(with_image: bool = False) -> tuple[str, str] | str:
     client.put("/create_note/", json=note_data)
 
     if with_image:
-        note_data["title"], image_data
+        return note_data["title"], image_data
     else:
         return note_data["title"]
 
@@ -95,16 +97,15 @@ def test_get_note():
 
 
 def test_get_note_with_img():
-    image_data, image_uuid = create_image()
-    image_data["uuid"] = image_uuid
+    note_title, image_data = create_note(with_image=True)
     result = {
         "title": "note_1",
         "content": "note_content",
         "tags": "test_1",
-        "uuid": "no-test-test",
+        "uuid": ANY,
         "image": image_data,
     }
-    response = client.get(f"/note/{result['title']}")
+    response = client.get(f"/note/{note_title}")
     assert_response(expected_result=result, response=response, status_code=200)
 
 
