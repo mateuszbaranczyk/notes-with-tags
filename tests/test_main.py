@@ -50,7 +50,7 @@ def test_create_note():
     assert response.json()["msg"] == "Created note!"
 
 
-def _assert_response(expected_result: dict, response: Response, status_code: int):
+def assert_response(expected_result: dict, response: Response, status_code: int):
     response_body = json.loads(response.content)
     assert response.status_code == status_code
     assert response_body == expected_result
@@ -77,7 +77,7 @@ def test_get_note():
         "uuid": "no-test-test",
     }
     response = client.get(f"/note/{result['title']}")
-    _assert_response(expected_result=result, response=response, status_code=200)
+    assert_response(expected_result=result, response=response, status_code=200)
 
 
 def test_get_tags():
@@ -92,7 +92,7 @@ def test_add_image():
     data = {"title": "image", "url": "https://test.pl"}
     result = {"msg": "Image added!", "uuid": ANY}
     response = client.put("/add_image", json=data)
-    _assert_response(expected_result=result, status_code=200, response=response)
+    assert_response(expected_result=result, status_code=200, response=response)
 
 
 def test_get_image():
@@ -101,4 +101,4 @@ def test_get_image():
     image_uuid = json.loads(image.content)["uuid"]
     response = client.get(f"/get_image/{image_uuid}")
     data["uuid"] = image_uuid
-    _assert_response(expected_result=data, response=response, status_code=200)
+    assert_response(expected_result=data, response=response, status_code=200)
