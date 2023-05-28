@@ -48,6 +48,7 @@ def test_create_note():
 
 def test_create_note_with_img():
     image_data, image_uuid = create_image()
+    image_data["uuid"] = image_uuid
     data = {
         "title": fake_title(),
         "content": "test note",

@@ -24,16 +24,16 @@ async def root():
 @app.put("/create_note/")
 async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
     db_note = crud.create_note(db, note)
-    return {"msg": "Created note!", "uuid": db_note.uuid, "image": db_note.image}
+    return {"msg": "Created note!", "uuid": db_note.uuid, "image": db_note.image_uuid}
 
 
 @app.get("/note/{title}", response_model=api_models.Note)
 async def get_note(title: str, db=Depends(get_db)):
     note = crud.get_note(db, title)
-    if note.image:
-        # TODO replace by relationshio
-        image = crud.get_image(db, note.image)
-        note.image = image
+    # if note.image:
+    #     # TODO replace by relationshio
+    #     image = crud.get_image(db, note.image)
+    #     note.image = image
     return note
 
 
