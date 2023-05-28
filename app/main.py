@@ -23,8 +23,8 @@ async def root():
 
 @app.put("/create_note/")
 async def create_note(note: api_models.NoteIn, db=Depends(get_db)):
-    created_object = crud.create_note(db, note)
-    return {"msg": "Created note!", "uuid": created_object.uuid}
+    db_note = crud.create_note(db, note)
+    return {"msg": "Created note!", "uuid": db_note.uuid, "image": db_note.image}
 
 
 @app.get("/note/{title}", response_model=api_models.Note)
@@ -39,8 +39,8 @@ async def get_note(title: str, db=Depends(get_db)):
 
 @app.put("/add_image/")
 async def add_image(image: api_models.ImageIn, db=Depends(get_db)):
-    created_object = crud.add_image(db, image)
-    return {"msg": "Image added!", "uuid": created_object.uuid}
+    db_image = crud.add_image(db, image)
+    return {"msg": "Image added!", "uuid": db_image.uuid}
 
 
 @app.get("/get_image/{uuid}", response_model=api_models.Image)

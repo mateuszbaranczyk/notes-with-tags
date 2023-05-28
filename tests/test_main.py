@@ -42,7 +42,7 @@ def test_root():
 def test_create_note():
     data = {"title": fake_title(), "content": "test note", "tags": "tag", "image": None}
     response = client.put("/create_note/", json=data)
-    result = {"msg": "Created note!", "uuid": ANY}
+    result = {"msg": "Created note!", "uuid": ANY, "image": None}
     assert_response(expected_result=result, response=response, status_code=200)
 
 
@@ -53,33 +53,16 @@ def assert_response(expected_result: dict, response: Response, status_code: int)
 
 
 def test_create_note_with_img():
-    # TODO does not checking if note has image!!!
+    image_data, image_uuid = create_image()
     data = {
         "title": fake_title(),
         "content": "test note",
         "tags": "tag1",
-        "image": "ig-test-test",
+        "image": image_uuid,
     }
-    result = {"msg": "Created note!", "uuid": ANY}
+    result = {"msg": "Created note!", "uuid": ANY, "image": image_uuid}
     response = client.put("/create_note/", json=data)
     assert_response(expected_result=result, response=response, status_code=200)
-
-
-def create_note(with_image: bool = False) -> tuple[str, str] | str:
-    image_data, image_uuid = create_image()
-    image_data["uuid"] = image_uuid
-    note_data = {
-        "title": fake_title(),
-        "content": "note_content",
-        "tags": "test_1",
-        "image": image_uuid if with_image else None,
-    }
-    client.put("/create_note/", json=note_data)
-
-    if with_image:
-        return note_data["title"], image_data
-    else:
-        return note_data["title"]
 
 
 def test_get_note():
@@ -130,11 +113,29 @@ def test_get_image():
     assert_response(expected_result=image_data, response=response, status_code=200)
 
 
-def create_image() -> dict | UUID:
+def create_image() -> tuple[dict, UUID]:
     data = {"title": "image", "url": "https://test.pl"}
     image = client.put("/add_image", json=data)
     image_uuid = json.loads(image.content)["uuid"]
     return data, image_uuid
 
-def fake_title():
-    return ''.join((random.choice('abcdxyzpqr') for _ in range(5)))
+
+def fake_title() -> str:
+    return "".join((random.choice("abcdxyzpqr") for _ in range(5)))
+
+
+def create_note(with_image: bool = False) -> tuple[str, str] | str:
+    image_data, image_uuid = create_image()
+    image_data["uuid"] = image_uuid
+    note_data = {
+        "title": fake_title(),
+        "content": "note_content",
+        "tags": "test_1",
+        "image": image_uuid if with_image else None,
+    }
+    client.put("/create_note/", json=note_data)
+
+    if with_image:
+        return note_data["title"], image_data
+    else:
+        return note_data["title"]
