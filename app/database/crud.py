@@ -38,6 +38,12 @@ def get_image(db: Session, uuid: UUID) -> api_models.Image:
     return db.query(db_tables.Image).filter(db_tables.Image.uuid == uuid).first()
 
 
+def get_tags(db: Session) -> set[str]:
+    notes = db.query(db_tables.Note).all()
+    tags = {note.tags for note in notes}
+    return tags
+
+
 def _create_uuid(prefix: str) -> UUID:
     alphabet = string.ascii_lowercase + string.digits
     suuid = shortuuid.ShortUUID(alphabet=alphabet)
