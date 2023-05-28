@@ -8,7 +8,7 @@ from app.api_models import UUID
 from app.database import db_tables
 
 
-def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
+def create_note(db: Session, note: api_models.NoteIn) -> api_models.NoteIn:
     db_note = db_tables.Note(
         title=note.title,
         content=note.content,
@@ -20,7 +20,7 @@ def create_note(db: Session, note: api_models.NoteIn) -> api_models.Note:
     return db_note
 
 
-def get_note(db, title):
+def get_note(db: Session, title: str) -> api_models.Note:
     return db.query(db_tables.Note).filter(db_tables.Note.title == title).first()
 
 

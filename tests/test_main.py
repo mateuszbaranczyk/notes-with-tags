@@ -46,12 +46,6 @@ def test_create_note():
     assert_response(expected_result=result, response=response, status_code=200)
 
 
-def assert_response(expected_result: dict, response: Response, status_code: int):
-    response_body = json.loads(response.content)
-    assert response.status_code == status_code
-    assert response_body == expected_result
-
-
 def test_create_note_with_img():
     image_data, image_uuid = create_image()
     data = {
@@ -111,6 +105,12 @@ def test_get_image():
     response = client.get(f"/get_image/{image_uuid}")
     image_data["uuid"] = image_uuid
     assert_response(expected_result=image_data, response=response, status_code=200)
+
+
+def assert_response(expected_result: dict, response: Response, status_code: int):
+    response_body = json.loads(response.content)
+    assert response.status_code == status_code
+    assert response_body == expected_result
 
 
 def create_image() -> tuple[dict, UUID]:
