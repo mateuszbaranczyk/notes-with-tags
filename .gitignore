@@ -128,3 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .vscode/
+
+# Database file 
+sql_app.db
+test.db
