@@ -16,7 +16,7 @@ def test_create_note(client):
     data = {"title": fake_title(), "content": "test note", "tags": "tag", "image": None}
     response = client.put("/create_note/", json=data)
     result = {"msg": "Created note!", "uuid": ANY, "image": None}
-    assert_response(expected_result=result, response=response, status_code=200)
+    assert_response(expected_result=result, response=response)
 
 
 def test_create_note_with_img(client):
@@ -30,7 +30,7 @@ def test_create_note_with_img(client):
     }
     result = {"msg": "Created note!", "uuid": ANY, "image": image_uuid}
     response = client.put("/create_note/", json=data)
-    assert_response(expected_result=result, response=response, status_code=200)
+    assert_response(expected_result=result, response=response)
 
 
 def test_get_note(client):
@@ -43,7 +43,7 @@ def test_get_note(client):
         "image": None,
     }
     response = client.get(f"/note/{note_title}")
-    assert_response(expected_result=result, response=response, status_code=200)
+    assert_response(expected_result=result, response=response)
 
 
 def test_get_note_with_img(client):
@@ -56,7 +56,7 @@ def test_get_note_with_img(client):
         "image": image_data,
     }
     response = client.get(f"/note/{note_title}")
-    assert_response(expected_result=result, response=response, status_code=200)
+    assert_response(expected_result=result, response=response)
 
 
 def test_get_tags(client):
@@ -69,17 +69,17 @@ def test_add_image(client):
     data = {"title": "image", "url": "https://test.pl"}
     result = {"msg": "Image added!", "uuid": ANY}
     response = client.put("/add_image", json=data)
-    assert_response(expected_result=result, status_code=200, response=response)
+    assert_response(expected_result=result, response=response)
 
 
 def test_get_image(client):
     image_data, image_uuid = create_image(client)
     response = client.get(f"/get_image/{image_uuid}")
     image_data["uuid"] = image_uuid
-    assert_response(expected_result=image_data, response=response, status_code=200)
+    assert_response(expected_result=image_data, response=response)
 
 
-def assert_response(expected_result: dict, response: Response, status_code: int):
+def assert_response(expected_result: dict, response: Response, status_code: int = 200):
     response_body = json.loads(response.content)
     assert response.status_code == status_code
     assert response_body == expected_result
