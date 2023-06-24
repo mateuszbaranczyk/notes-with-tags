@@ -1,4 +1,5 @@
 from fastapi import Depends, FastAPI
+from fastapi.responses import RedirectResponse
 
 from app import api_models
 from app.api_models import UUID
@@ -15,7 +16,8 @@ async def startup_event():
 
 @app.get("/")
 async def root():
-    return {"msg": "Hello World"}
+    redirect = RedirectResponse(url="/docs")
+    return redirect
 
 
 @app.put("/create_note/", response_model=dict)
