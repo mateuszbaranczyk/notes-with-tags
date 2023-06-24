@@ -2,52 +2,25 @@ import json
 import random
 from unittest.mock import ANY
 
-from fastapi.testclient import TestClient
 from requests import Response
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 from app.api_models import UUID
-from app.database.db_config import Base, get_db
-from app.main import app
-
-SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
-Base.metadata.create_all(bind=engine)
-
-
-def override_get_db():
-    try:
-        db = TestingSessionLocal()
-        yield db
-    finally:
-        db.close()
-
-
-app.dependency_overrides[get_db] = override_get_db
-
-
-client = TestClient(app)
-
-
-def test_root():
+def test_root(client):
     response = client.get("/")
     assert response.status_code == 200
 
 
-def test_create_note():
+def test_create_note(client):
     data = {"title": fake_title(), "content": "test note", "tags": "tag", "image": None}
     response = client.put("/create_note/", json=data)
     result = {"msg": "Created note!", "uuid": ANY, "image": None}
     assert_response(expected_result=result, response=response, status_code=200)
 
 
-def test_create_note_with_img():
-    image_data, image_uuid = create_image()
+def test_create_note_with_img(client):
+    image_data, image_uuid = create_image(client)
     image_data["uuid"] = image_uuid
     data = {
         "title": fake_title(),
@@ -60,8 +33,8 @@ def test_create_note_with_img():
     assert_response(expected_result=result, response=response, status_code=200)
 
 
-def test_get_note():
-    note_title = create_note()
+def test_get_note(client):
+    note_title = create_note(client)
     result = {
         "title": note_title,
         "content": "note_content",
@@ -73,8 +46,8 @@ def test_get_note():
     assert_response(expected_result=result, response=response, status_code=200)
 
 
-def test_get_note_with_img():
-    note_title, image_data = create_note(with_image=True)
+def test_get_note_with_img(client):
+    note_title, image_data = create_note(client=client, with_image=True)
     result = {
         "title": note_title,
         "content": "note_content",
@@ -86,21 +59,21 @@ def test_get_note_with_img():
     assert_response(expected_result=result, response=response, status_code=200)
 
 
-def test_get_tags():
-    create_note()
+def test_get_tags(client):
+    create_note(client)
     response = client.get("/tags/")
     assert response.status_code == 200
 
 
-def test_add_image():
+def test_add_image(client):
     data = {"title": "image", "url": "https://test.pl"}
     result = {"msg": "Image added!", "uuid": ANY}
     response = client.put("/add_image", json=data)
     assert_response(expected_result=result, status_code=200, response=response)
 
 
-def test_get_image():
-    image_data, image_uuid = create_image()
+def test_get_image(client):
+    image_data, image_uuid = create_image(client)
     response = client.get(f"/get_image/{image_uuid}")
     image_data["uuid"] = image_uuid
     assert_response(expected_result=image_data, response=response, status_code=200)
@@ -112,7 +85,7 @@ def assert_response(expected_result: dict, response: Response, status_code: int)
     assert response_body == expected_result
 
 
-def create_image() -> tuple[dict, UUID]:
+def create_image(client) -> tuple[dict, UUID]:
     data = {"title": "image", "url": "https://test.pl"}
     image = client.put("/add_image", json=data)
     image_uuid = json.loads(image.content)["uuid"]
@@ -123,8 +96,8 @@ def fake_title() -> str:
     return "".join((random.choice("abcdxyzpqr") for _ in range(5)))
 
 
-def create_note(with_image: bool = False) -> tuple[str, str] | str:
-    image_data, image_uuid = create_image()
+def create_note(client, with_image: bool = False) -> tuple[str, str] | str:
+    image_data, image_uuid = create_image(client)
     image_data["uuid"] = image_uuid
     note_data = {
         "title": fake_title(),
