@@ -1,5 +1,5 @@
-# FastAPI training 
-from https://fastapi.tiangolo.com/
+# Notes With Tags
+from https://fastapi.tiangolo.com/ as base repository I created a new project
 
 ## Installation
 - Install [docker](https://docs.docker.com/get-docker/)
