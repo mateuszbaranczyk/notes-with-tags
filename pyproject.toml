@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "fastapi_tutorial"
+name = "notes with tags"
 version = "0.2.0"
 description = "tutorial"
 authors = ["kundziorro"]
