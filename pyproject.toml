@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "notes with tags"
 version = "0.2.0"
-description = "tutorial"
+description = ""
 authors = ["kundziorro"]
 license = "MIT"
 readme = "README.md"
