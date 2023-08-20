@@ -1,6 +1,6 @@
-FROM ubuntu:latest
+FROM python:3.10-slim
 
-RUN apt-get update && pip install "poetry==1.4.2"
+RUN pip install "poetry==1.4.2"
 WORKDIR /code
 
 COPY poetry.lock pyproject.toml /code/
@@ -11,4 +11,4 @@ COPY . /code
 
 EXPOSE 8080
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+CMD ["uvicorn", "code.app.main:app", "--host", "0.0.0.0", "--port", "8080"]
