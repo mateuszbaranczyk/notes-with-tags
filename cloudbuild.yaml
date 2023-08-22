@@ -18,7 +18,13 @@ steps:
     args:
       - pytest
       - '--black'
+      - '-m'
+      - 'black'
+      - '&&'
+      - pytest
       - '--isort'
+      - '-m'
+      - 'isort'
     id: Linters
   - name: gcr.io/cloud-builders/docker
     args:
