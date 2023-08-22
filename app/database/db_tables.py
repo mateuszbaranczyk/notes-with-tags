@@ -18,7 +18,17 @@ class Note(db_config.Base):
     uuid = Column(String, primary_key=True, index=True, unique=True)
     title = Column(String, index=True)
     content = Column(Text)
-    tags = Column(String)
+
+    tags = relationship("Tag", secondary="note_tags", back_populates="notes")
 
     image_uuid = Column(String, ForeignKey("images.uuid"))
     image = relationship("Image")
+
+
+class Tag(db_config.Base):
+    __tablename__ = "tags"
+
+    uuid = Column(String, primary_key=True, index=True, unique=True)
+    title = Column(String, index=True, unique=True)
+
+    notes = relationship("Note", secondary="note_tags", back_populates="tags")
